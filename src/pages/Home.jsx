@@ -394,7 +394,7 @@ function LoginPage({ onLogin }) {
 */}
 
 async function handleLogin(email,password) {
-     try{const response=await axios.post("http://e-commerce1-backend-2l1x.onrender.com/login/",
+     try{const response=await axios.post("https://e-commerce1-backend-2l1x.onrender.com/login/",
     {email,
       password,
     }
@@ -460,7 +460,7 @@ export default function Home() {
 
   useEffect(()=>{
     axios
-    .get("http://e-commerce1-backend-2l1x.onrender.com/products/")
+    .get("https://e-commerce1-backend-2l1x.onrender.com/products/")
     .then((response)=>{
       console.log("Api data:", response.data);
       setProducts(response.data);
@@ -482,7 +482,7 @@ export default function Home() {
 
 
     try{
-      const response=await axios.post("http://e-commerce1-backend-2l1x.onrender.com/cart/",
+      const response=await axios.post("https://e-commerce1-backend-2l1x.onrender.com/cart/",
         {product_id:productId},
        // {product:1},
         {withCredentials:true,
