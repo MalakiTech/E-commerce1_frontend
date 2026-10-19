@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Search, Heart, ShoppingBag, User, MapPin, Phone, Mail, House } from "lucide-react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 axios.defaults.withCredentials=true;
 
@@ -397,9 +398,10 @@ async function handleLogin(email,password) {
      try{const response=await axios.post("https://e-commerce1-backend-2l1x.onrender.com/login/",
     {email,
       password,
-    }
+    },
+    {withCredentials:true}
      );
-    localStorage.setItem("token",response.data.token);
+    localStorage.setItem("loggedIn","true");
     setUser(email);
     setPage("home");
     alert("Login Successful");
@@ -444,13 +446,45 @@ async function handleLogin(email,password) {
           {error && <p className="text-xs text-red-600">{error}</p>}
           <button className="mt-2 rounded bg-neutral-900 py-2 text-sm text-white">Login</button>
           <p className="text-center text-xs text-neutral-500">
-            Don't have an account? <span className="text-amber-600">Sign up</span>
+            Don't have an account?<Link to="/signup"><span className="text-amber-600">Sign up</span></Link> 
           </p>
         </form>
       </div>
     </div>
   );
 }
+
+
+
+{/*function Logout() {
+
+  useEffect(()=>{
+    const logout = async () => {
+      try{
+        await axios.post("https://e-commerce1-backend-2l1x.onrender.com/logout/",
+          {},
+          {withCredentials:true}
+
+        );
+      }catch (err){
+        console.log(err.response?.data || err.message);
+      }finally{
+        localStorage.removeItem("loggedIn");
+        localStorage.removeItem("token");
+        localStorage.removeItem("access");
+        
+      }
+    };
+    logout();
+  },[]);
+
+  return <p >Singing you out...</p>;
+  
+}*/}
+
+
+
+
 
 export default function Home() {
   const [page, setPage] = useState("home");
@@ -554,6 +588,7 @@ export default function Home() {
      
       {page === "contact" && <ContactPage />}
       {page === "login" && <LoginPage />}
+      {page === "logout" && <Logout/>}
 
       <footer className="border-t border-neutral-200 px-6 py-6 text-center text-xs text-neutral-500 md:px-16">
         {user ? `Signed in as ${user}` : "MALAKI — free shipping on all orders selected for you"}
